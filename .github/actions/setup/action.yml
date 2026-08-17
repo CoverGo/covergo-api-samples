@@ -4,6 +4,15 @@ description: Install Node and restore the Node and .NET dependencies for the sam
 runs:
   using: composite
   steps:
+    # Every job runs inside the .NET SDK image, so git sees a workspace owned by the
+    # runner user while it is running as root and refuses to touch it ("detected dubious
+    # ownership"). actions/checkout exempts itself under a temporary HOME; anything else
+    # that shells out to git -- our base-branch fetch, and nx affected's own git diff --
+    # needs the exemption declared here.
+    - name: Trust the workspace
+      run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      shell: bash
+
     - name: Install Node
       uses: actions/setup-node@v7
       with:
