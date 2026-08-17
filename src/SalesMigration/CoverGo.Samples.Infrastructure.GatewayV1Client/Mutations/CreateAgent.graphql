@@ -1,0 +1,36 @@
+# Creates one individual broker under a distributor.
+#
+# Always inspect `errors` even on HTTP 200 — validation failures come back inside the
+# payload, not as top-level GraphQL errors. AgentNumberAlreadyExists and
+# RegistrationNumberAlreadyExists mean "already migrated", not "failed".
+mutation CreateAgent($input: CreateAgentInput!) {
+  createAgent(input: $input) {
+    agentState {
+      agentID
+      distributorId
+      agentNumber
+      partyId
+      party {
+        firstName
+        surname
+        mainContactEmail
+      }
+    }
+    errors {
+      __typename
+      ... on IndividualAgentFieldMissingError { message code }
+      ... on EmailInvalidError { message code path }
+      ... on EmailAlreadyExistsError { message code }
+      ... on AgentNumberAlreadyExistsError { message code }
+      ... on RegistrationNumberAlreadyExistsError { message code }
+      ... on DistrictCodeInvalidError { message code path }
+      ... on LicenseExpiryDateBeforeRegistrationDateError { message code path }
+      ... on IndividualAgentContainsVirtualAgentFieldsError { message code }
+      ... on AgentFieldsValidationError {
+        message
+        code
+        fieldErrors { path message }
+      }
+    }
+  }
+}

@@ -3,6 +3,8 @@
   <Folder Name="/src/SalesMigration/">
     <Project Path="src/SalesMigration/CoverGo.Samples.Application/CoverGo.Samples.Application.csproj" />
     <Project Path="src/SalesMigration/CoverGo.Samples.Domain/CoverGo.Samples.Domain.csproj" />
+    <Project Path="src/SalesMigration/CoverGo.Samples.Infrastructure.GatewayV1Client/CoverGo.Samples.Infrastructure.GatewayV1Client.csproj" />
+    <Project Path="src/SalesMigration/CoverGo.Samples.Infrastructure.GatewayV2Client/CoverGo.Samples.Infrastructure.GatewayV2Client.csproj" />
     <Project Path="src/SalesMigration/CoverGo.Samples.Tests.Unit/CoverGo.Samples.Tests.Unit.csproj" />
   </Folder>
 </Solution>

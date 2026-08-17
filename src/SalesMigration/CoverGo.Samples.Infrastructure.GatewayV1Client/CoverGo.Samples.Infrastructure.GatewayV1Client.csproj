@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Generated Strawberry Shake client for the V1 gateway. Every operation the migration
+    samples call lives here: ChannelManagement (distributors, agents, sales channels) and
+    the Users entity surface are both stitched into V1.
+
+    schema.graphql is a full snapshot of the live V1 gateway schema, matching how every
+    other CoverGo service commits its client snapshots. Refresh it with DownloadSchema.sh.
+    *.g.cs is generated; never edit it by hand.
+  -->
+
+  <ItemGroup>
+    <PackageReference Include="StrawberryShake.Server" />
+  </ItemGroup>
+
+</Project>

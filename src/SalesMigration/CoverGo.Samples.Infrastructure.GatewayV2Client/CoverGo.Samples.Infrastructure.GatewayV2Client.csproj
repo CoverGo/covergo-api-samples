@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Generated Strawberry Shake client for the V2 supergraph, whose subgraphs are
+    quotation, payments, riskManagement, entityNotes, pushIntegration, rulesConnector,
+    campaignManagement, consentManagement and chParty.
+
+    No migration sample calls V2 yet — Policies is stitched into V1, not V2 — so this
+    project carries a single read to prove the wiring. It is where the buy-flow surface
+    (opportunities, offers, payments) lands once a migration needs it.
+
+    schema.graphql is the committed full snapshot, downloaded as-is — see DownloadSchema.sh.
+    Unlike the V1 gateway it needs no post-processing: the supergraph stitches no
+    RequestManager surface and declares no interface without an implementing type.
+  -->
+
+  <ItemGroup>
+    <PackageReference Include="StrawberryShake.Server" />
+  </ItemGroup>
+
+</Project>

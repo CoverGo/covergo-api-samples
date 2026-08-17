@@ -1,0 +1,16 @@
+{
+  "schema": "schema.graphql",
+  "documents": "**/*.graphql",
+  "extensions": {
+    "strawberryShake": {
+      "name": "GatewayV2Client",
+      "namespace": "CoverGo.Samples.Infrastructure.GatewayV2Client",
+      "url": "https://replace-me-v2.example.invalid/graphql",
+      "dependencyInjection": true,
+      "records": { "inputs": false, "entities": false },
+      "transportProfiles": [
+        { "default": "Http", "name": "Default" }
+      ]
+    }
+  }
+}

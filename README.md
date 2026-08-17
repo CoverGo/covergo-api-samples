@@ -31,6 +31,8 @@ Everything for one migration lives under a single folder, `src/SalesMigration`:
 | --- | --- |
 | `CoverGo.Samples.Domain` | `IMigrationSource<T>` — the contract you implement. No dependencies. |
 | `CoverGo.Samples.Application` | Use cases: `MigrationRunner<T>`, the `IMigrationTarget<T>` port, and the per-record result and report types. Depends on Domain only. |
+| `CoverGo.Samples.Infrastructure.GatewayV1Client` | Generated client for the V1 gateway. Every operation the samples call. |
+| `CoverGo.Samples.Infrastructure.GatewayV2Client` | Generated client for the V2 supergraph. |
 | `CoverGo.Samples.Tests.Unit` | Unit tests, with xUnit and Moq. |
 
 ## Building and testing
@@ -51,6 +53,17 @@ touched — which is what CI runs on a pull request.
 
 Warnings are errors here. That is deliberate: it is cheaper to fix a nullability warning than to
 debug the null it predicted.
+
+## Regenerating a GraphQL schema
+
+Each client project holds a committed `schema.graphql` snapshot and the `DownloadSchema.sh`
+that produced it. Generated C# is **not** committed — Strawberry Shake writes it into `obj/`
+at build time from the snapshot and the operation documents in `Queries/` and `Mutations/`.
+
+Refresh a snapshot with the script beside it rather than by hand, and review the diff. The V1
+script also runs a strip step, which is required rather than cosmetic: the raw V1 introspection
+declares interfaces with no implementing type, and Strawberry Shake refuses to generate from
+that.
 
 ## Documentation
 

@@ -1,0 +1,7 @@
+# Smoke read proving the V2 client and its authentication work end to end.
+# The migration samples do not use V2; this is the wiring check.
+query Opportunities($take: Int!) {
+  opportunities(take: $take) {
+    totalCount
+  }
+}
