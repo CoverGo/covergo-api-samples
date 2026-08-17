@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    The innermost layer. Holds the contracts the customer implements and nothing else.
+    It must not reference the generated gateway clients, or any other project: that is what
+    lets a customer implement the source interfaces without touching GraphQL.
+  -->
+
+</Project>

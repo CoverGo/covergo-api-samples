@@ -1,0 +1,19 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <!-- Generated GraphQL clients are excluded from style enforcement; they are never hand-edited. -->
+  <ItemGroup>
+    <Compile Update="**\*.g.cs">
+      <NoWarn>$(NoWarn);CS8618;CS1591</NoWarn>
+    </Compile>
+  </ItemGroup>
+
+</Project>
