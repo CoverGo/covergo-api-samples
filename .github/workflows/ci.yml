@@ -33,6 +33,15 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
+      # checkout fetches the pull request's merge ref only, so it leaves no
+      # origin/<base> tracking ref for nx affected to diff against. Without this,
+      # nx fails with "Could not access 'origin/main'".
+      - name: Fetch the base branch
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch --no-tags origin \
+            "+refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}"
+
       # On a pull request only what the branch touched needs rebuilding. On a push to
       # main there is no meaningful base to diff against, so everything runs.
       - name: Build and test affected projects
