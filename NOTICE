@@ -1,0 +1,11 @@
+CoverGo API Samples
+Copyright 2026 CoverGo
+
+This product includes software developed at CoverGo (https://www.covergo.com/).
+
+The code in this repository is reference material showing how to call the CoverGo
+APIs. It is not a supported SDK and carries no service-level commitment. The
+Apache License, Version 2.0 governs its use; see the LICENSE file for the terms.
+
+CoverGo and the CoverGo logo are trademarks of CoverGo. Section 6 of the License
+grants no rights to use them.

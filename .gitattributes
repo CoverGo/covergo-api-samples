@@ -1,0 +1,10 @@
+# Normalise line endings so a clone on Windows and one on macOS agree.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.pdf binary
+
+# Generated GraphQL schema snapshots: keep them out of diffs and language stats.
+# They are refreshed wholesale by DownloadSchema.sh, never edited by hand.
+*.graphql linguist-generated=true -diff

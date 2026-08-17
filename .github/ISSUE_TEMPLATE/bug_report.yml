@@ -1,0 +1,46 @@
+name: Bug in a sample
+description: A sample does not build, does not run, or does the wrong thing.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Never paste a token, credential, or customer record into an issue.
+        For a vulnerability use the [security policy](../security/policy) instead.
+  - type: input
+    id: sample
+    attributes:
+      label: Which sample
+      placeholder: CoverGo.Samples.AgentMigrationApp
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you ran, and what came back. Redact identifiers.
+      placeholder: |
+        dotnet run --project src/SalesMigration/CoverGo.Samples.AgentMigrationApp -- --file agents.json
+        -> The reference type 'CRY' could not be found.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected instead
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: .NET and Node versions
+      placeholder: dotnet 10.0.11, node 24.4.0
+    validations:
+      required: true
+  - type: checkboxes
+    id: tenant
+    attributes:
+      label: Configuration
+      options:
+        - label: The failure reproduces with placeholder configuration replaced by my own tenant's values
+        - label: I have checked this is not a tenant-configuration difference (missing reference data, missing data schema)

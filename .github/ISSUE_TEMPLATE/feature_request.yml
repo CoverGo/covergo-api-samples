@@ -1,0 +1,23 @@
+name: Request a sample
+description: Ask for a sample covering a CoverGo API that is not here yet.
+labels: [enhancement]
+body:
+  - type: input
+    id: api
+    attributes:
+      label: Which CoverGo operation
+      placeholder: importAgents, issuePolicyV2, addPolicyAttachment
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do
+      description: The integration problem, not the proposed code. What is hard about it today?
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you have tried
+      description: Which documentation you followed and where it ran out.

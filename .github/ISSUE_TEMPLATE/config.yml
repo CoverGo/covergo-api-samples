@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Help with your own integration or tenant
+    url: https://www.covergo.com/contact
+    about: Questions about your credentials, tenant configuration or reference data need your CoverGo representative — they cannot be answered here.
+  - name: Report a vulnerability
+    url: https://github.com/CoverGo/covergo-api-samples/security/policy
+    about: Never report a vulnerability in a public issue.
