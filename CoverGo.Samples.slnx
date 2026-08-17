@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/SalesMigration/">
+    <Project Path="src/SalesMigration/CoverGo.Samples.Application/CoverGo.Samples.Application.csproj" />
+    <Project Path="src/SalesMigration/CoverGo.Samples.Domain/CoverGo.Samples.Domain.csproj" />
+    <Project Path="src/SalesMigration/CoverGo.Samples.Tests.Unit/CoverGo.Samples.Tests.Unit.csproj" />
+  </Folder>
+</Solution>

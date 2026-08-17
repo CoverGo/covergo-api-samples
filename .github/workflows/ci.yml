@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# A newer push to the same branch makes an in-flight run redundant.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # Single job composed of composite actions. A matrix or reusable workflow would
+  # spawn extra runners for no benefit at this size.
+  ci:
+    name: Build, test and scan
+    runs-on: ubuntu-latest
+    # Every step runs inside the .NET SDK image rather than on the host runner.
+    container: mcr.microsoft.com/dotnet/sdk:10.0
+
+    steps:
+      # Checkout must precede the local composite action, which is read from the workspace.
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # Nx compares against the merge base, so it needs the history.
+          fetch-depth: 0
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      # On a pull request only what the branch touched needs rebuilding. On a push to
+      # main there is no meaningful base to diff against, so everything runs.
+      - name: Build and test affected projects
+        if: github.event_name == 'pull_request'
+        run: |
+          npx nx affected -t build --base=origin/${{ github.base_ref }}
+          npx nx affected -t lint  --base=origin/${{ github.base_ref }}
+          npx nx affected -t test  --base=origin/${{ github.base_ref }}
+
+      - name: Build and test all projects
+        if: github.event_name != 'pull_request'
+        run: |
+          npx nx run-many -t build
+          npx nx run-many -t lint
+          npx nx run-many -t test
+
+  # Kept separate: gitleaks scans the repository, not the build output, and it must
+  # report even when the build fails.
+  secret-scan:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Scan for committed credentials
+        uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

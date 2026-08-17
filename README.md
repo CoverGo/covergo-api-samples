@@ -8,30 +8,49 @@ Reference C# programs showing how to call the CoverGo APIs.
 ## Status
 
 This repository is being populated. The first sample covers migrating a sales structure —
-distributors and agents — into a CoverGo tenant; policies, clients and documents follow.
+distributors and agents — into a CoverGo tenant; clients, policies and documents follow.
 
-## What is here
+## You supply the data, the samples supply the API calls
 
-Each sample is a runnable console program that authenticates with the OAuth2
-`client_credentials` grant and calls one CoverGo API. You supply the data through an
-interface; the sample supplies the mapping and the call. Nothing in this repository is a
-working credential, and nothing that is one should ever be committed here.
+Every sample reads its input through an interface. CoverGo ships two reference implementations
+of each one — a JSON extract reader, and a version that builds the record in code — and you
+replace them with an implementation that reads your own extract. Nothing else has to change.
 
-Once a sample lands, its folder carries its own README with the operations it calls and the
-constraints CoverGo enforces on them.
+That seam is `IMigrationSource<T>` in the Domain layer. Domain and Application hold no
+dependency on the generated GraphQL clients, so your mapping code never has to know that
+CoverGo speaks GraphQL.
 
-## Getting started
+Two load shapes sit behind one port, `IMigrationTarget<T>`: one call per record, or one call
+for a whole batch. Which one a sample uses is invisible to the rest of the program.
+
+## Layout
+
+Everything for one migration lives under a single folder, `src/SalesMigration`:
+
+| Project | Holds |
+| --- | --- |
+| `CoverGo.Samples.Domain` | `IMigrationSource<T>` — the contract you implement. No dependencies. |
+| `CoverGo.Samples.Application` | Use cases: `MigrationRunner<T>`, the `IMigrationTarget<T>` port, and the per-record result and report types. Depends on Domain only. |
+| `CoverGo.Samples.Tests.Unit` | Unit tests, with xUnit and Moq. |
+
+## Building and testing
 
 Requires the [.NET 10 SDK](https://dotnet.microsoft.com/download) and Node 24 or newer.
 
 ```bash
-npm ci        # installs Nx and the .NET plugin
-npm run build
-npm run test
+npm ci            # installs Nx and the .NET plugin
+npm run build     # nx run-many -t build
+npm run lint      # nx run-many -t lint   (dotnet format --verify-no-changes)
+npm run test      # nx run-many -t test
 ```
 
-Real credentials are supplied at run time through `dotnet user-secrets` or the environment —
-never through a committed file. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Projects and targets are inferred by [`@nx-dotnet/core`](https://github.com/nx-dotnet/nx-dotnet)
+directly from the `.csproj` files, including the dependency graph, so adding a project needs no
+Nx configuration. Nx caches per project, so `npm run affected:build` rebuilds only what a change
+touched — which is what CI runs on a pull request.
+
+Warnings are errors here. That is deliberate: it is cheaper to fix a nullability warning than to
+debug the null it predicted.
 
 ## Documentation
 

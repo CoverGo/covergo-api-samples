@@ -1,0 +1,21 @@
+{
+  "name": "covergo-api-samples",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Reference C# programs showing how to call the CoverGo APIs.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "nx run-many -t build",
+    "test": "nx run-many -t test",
+    "lint": "nx run-many -t lint",
+    "affected:build": "nx affected -t build",
+    "affected:test": "nx affected -t test",
+    "affected:lint": "nx affected -t lint"
+  },
+  "devDependencies": {
+    "@nx-dotnet/core": "3.0.2",
+    "@nx/js": "21.4.1",
+    "nx": "22.7.8"
+  },
+  "dependencies": {}
+}
