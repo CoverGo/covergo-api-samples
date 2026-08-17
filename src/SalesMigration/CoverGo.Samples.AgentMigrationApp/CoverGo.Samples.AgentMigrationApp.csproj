@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Console host for the Agent sample. One sample, one runnable program. -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>CoverGo.Samples.AgentMigrationApp</RootNamespace>
+    <UserSecretsId>covergo-api-samples</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoverGo.Samples.Infrastructure\CoverGo.Samples.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\CoverGo.Samples.Infrastructure\appsettings.json"
+          Link="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\data\agents.sample.json"
+          Link="data\agents.sample.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
