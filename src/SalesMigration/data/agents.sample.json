@@ -1,0 +1,26 @@
+[
+  {
+    "partyId": "SRC-AGT-1001",
+    "agentNumber": "AGT-1001",
+    "distributorId": "3f7b1c9e5a2d4f8b6e0c1a3d5f7b9c2e",
+    "firstName": "Amrit",
+    "surname": "Sandhu",
+    "email": "amrit.sandhu@brokerage.example",
+    "activeFrom": "2026-01-01T00:00:00Z",
+    "phone": "+1-555-555-0142",
+    "countryCode": "CA",
+    "registrationNumber": "LIC-88213",
+    "registeredOn": "2019-04-15T00:00:00Z",
+    "licenceExpiresOn": "2027-04-15T00:00:00Z"
+  },
+  {
+    "partyId": "SRC-AGT-1002",
+    "agentNumber": "AGT-1002",
+    "distributorId": "3f7b1c9e5a2d4f8b6e0c1a3d5f7b9c2e",
+    "firstName": "Grace",
+    "surname": "Okafor",
+    "email": "grace.okafor@brokerage.example",
+    "activeFrom": "2026-01-01T00:00:00Z",
+    "countryCode": "CA"
+  }
+]

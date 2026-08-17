@@ -34,7 +34,32 @@ Everything for one migration lives under a single folder, `src/SalesMigration`:
 | `CoverGo.Samples.Infrastructure` | Configuration, authentication and mapping. The only layer that knows CoverGo speaks GraphQL. |
 | `CoverGo.Samples.Infrastructure.GatewayV1Client` | Generated client for the V1 gateway. Every operation the samples call. |
 | `CoverGo.Samples.Infrastructure.GatewayV2Client` | Generated client for the V2 supergraph. |
+| `CoverGo.Samples.AgentMigrationApp` | Runnable console host for the agent sample. |
 | `CoverGo.Samples.Tests.Unit` | Unit tests, with xUnit and Moq. |
+
+## The first sample: agents
+
+`CoverGo.Samples.AgentMigrationApp` loads agents into a tenant. It shows the two things a
+migration actually has to get right.
+
+**Parsing and mapping are separate steps.** `JsonFileAgentSource` parses an extract into the
+`Agent` record with `System.Text.Json`; `GatewayAgentTarget` maps that record onto the
+`createAgent` input. Your own source implementation replaces the first and leaves the second
+alone. `InCodeAgentSource` builds the same record by hand, for when you want one call and no
+file.
+
+**A re-run must not duplicate.** CoverGo has no upsert for agents, so the target reads by your
+own `partyId` before it writes and reports the record as already-migrated instead of creating a
+second one. Uniqueness errors coming back from CoverGo are treated the same way rather than as
+failures. Run it twice — the second run should create nothing.
+
+The run ends with a report counting created, already-existed and failed records, and exits
+non-zero if any record failed. A single bad row never abandons the rest of the extract.
+
+```bash
+dotnet run --project src/SalesMigration/CoverGo.Samples.AgentMigrationApp -- \
+  src/SalesMigration/data/agents.sample.json
+```
 
 ## Configuration
 

@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/" />
   <Folder Name="/src/SalesMigration/">
+    <Project Path="src/SalesMigration/CoverGo.Samples.AgentMigrationApp/CoverGo.Samples.AgentMigrationApp.csproj" />
     <Project Path="src/SalesMigration/CoverGo.Samples.Application/CoverGo.Samples.Application.csproj" />
     <Project Path="src/SalesMigration/CoverGo.Samples.Domain/CoverGo.Samples.Domain.csproj" />
     <Project Path="src/SalesMigration/CoverGo.Samples.Infrastructure.GatewayV1Client/CoverGo.Samples.Infrastructure.GatewayV1Client.csproj" />
