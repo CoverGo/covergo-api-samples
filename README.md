@@ -31,9 +31,39 @@ Everything for one migration lives under a single folder, `src/SalesMigration`:
 | --- | --- |
 | `CoverGo.Samples.Domain` | `IMigrationSource<T>` — the contract you implement. No dependencies. |
 | `CoverGo.Samples.Application` | Use cases: `MigrationRunner<T>`, the `IMigrationTarget<T>` port, and the per-record result and report types. Depends on Domain only. |
+| `CoverGo.Samples.Infrastructure` | Configuration, authentication and mapping. The only layer that knows CoverGo speaks GraphQL. |
 | `CoverGo.Samples.Infrastructure.GatewayV1Client` | Generated client for the V1 gateway. Every operation the samples call. |
 | `CoverGo.Samples.Infrastructure.GatewayV2Client` | Generated client for the V2 supergraph. |
 | `CoverGo.Samples.Tests.Unit` | Unit tests, with xUnit and Moq. |
+
+## Configuration
+
+Settings bind from `appsettings.json`, then environment variables, then user secrets — each
+overriding the last. A missing setting stops the program at startup and names it, rather than
+surfacing later as an authentication failure.
+
+`appsettings.json` ships **placeholder values only**, and carries no client secret at all.
+Nothing in this repository is a working credential, and nothing that is one should ever be
+committed here. Supply the real values at run time:
+
+```bash
+# Locally
+dotnet user-secrets set "CoverGo:ClientId"     "<your-client-id>"
+dotnet user-secrets set "CoverGo:ClientSecret" "<your-client-secret>"
+
+# Anywhere else
+export CoverGo__ClientId="<your-client-id>"
+export CoverGo__ClientSecret="<your-client-secret>"
+```
+
+CoverGo provisions your client application and tells you its id, plus the tenant and gateway
+URLs to use.
+
+## Authentication
+
+A `DelegatingHandler` acquires an OAuth2 `client_credentials` token, caches it in memory and
+attaches it to every gateway request. One token serves a whole run: it is refreshed only when
+it is close to expiry, so a batch of a thousand records still calls the token endpoint once.
 
 ## Building and testing
 
