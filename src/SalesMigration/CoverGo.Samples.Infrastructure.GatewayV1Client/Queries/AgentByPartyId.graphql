@@ -1,0 +1,13 @@
+# Idempotency read: partyId is the caller-owned source key, so a re-run looks the agent
+# up by it and skips creating a duplicate. CoverGo has no upsert for agents.
+query AgentByPartyId($partyId: String!) {
+  agents(take: 1, filter: { partyId: $partyId }) {
+    totalCount
+    items {
+      agentID
+      agentNumber
+      partyId
+      distributorId
+    }
+  }
+}
